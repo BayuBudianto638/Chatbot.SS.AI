@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Chatbos.SS.LoginService\Chatbos.SS.LoginService.csproj" />
     <ProjectReference Include="..\Chatbot.SS.AI.ApiService\Chatbot.SS.AI.ApiService.csproj" />
     <ProjectReference Include="..\Chatbot.SS.AI.Web\Chatbot.SS.AI.Web.csproj" />
   </ItemGroup>

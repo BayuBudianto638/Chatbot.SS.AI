@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatbot.SS.AI.Web", "Chatbo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatbot.SS.AI.Tests", "Chatbot.SS.AI.Tests\Chatbot.SS.AI.Tests.csproj", "{44B26C9E-1FB6-D3D8-73CE-1746D056014B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatbos.SS.LoginService", "Chatbos.SS.LoginService\Chatbos.SS.LoginService.csproj", "{641C6BDC-BD24-A08A-CD04-619142C851CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,9 +42,16 @@ Global
 		{44B26C9E-1FB6-D3D8-73CE-1746D056014B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44B26C9E-1FB6-D3D8-73CE-1746D056014B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44B26C9E-1FB6-D3D8-73CE-1746D056014B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{641C6BDC-BD24-A08A-CD04-619142C851CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{641C6BDC-BD24-A08A-CD04-619142C851CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{641C6BDC-BD24-A08A-CD04-619142C851CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{641C6BDC-BD24-A08A-CD04-619142C851CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{641C6BDC-BD24-A08A-CD04-619142C851CF} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7AE32E51-8209-4FC6-A3C0-2C0DCF0D0B40}
