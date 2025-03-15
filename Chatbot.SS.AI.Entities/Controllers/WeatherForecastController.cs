@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Chatbos.SS.LoginService.Controllers;
+namespace Chatbot.SS.AI.Entities.Controllers;
 
 [ApiController]
 [Route("[controller]")]

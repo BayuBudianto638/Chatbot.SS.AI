@@ -1,4 +1,4 @@
-namespace Chatbos.SS.LoginService;
+namespace Chatbot.SS.AI.Entities;
 
 public class WeatherForecast
 {
