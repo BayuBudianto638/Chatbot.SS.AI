@@ -10,4 +10,6 @@ builder.AddProject<Projects.Chatbot_SS_AI_Web>("webfrontend")
     .WithReference(cache)
     .WithReference(apiService);
 
+builder.AddProject<Projects.Chatbot_SS_AI_MiniLM>("chatbot-ss-ai-minilm");
+
 builder.Build().Run();
