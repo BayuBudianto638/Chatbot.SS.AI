@@ -1,11 +1,16 @@
+using Chatbot.SS.AI.Entities.Database;
+
 var builder = WebApplication.CreateBuilder(args);
-
-
+var configuration = builder.Configuration;
+string mongoConnectionString = configuration["MongoDB:ConnectionString"] ?? "mongodb://localhost:27017/";
+string mongoDatabaseName = configuration["MongoDB:DatabaseName"] ?? "ChatbotDB";
 
 builder.AddServiceDefaults();
 
 // Add services to the container.
-
+builder.Services.AddSingleton<AppDbContext>(provider =>
+    new AppDbContext(mongoConnectionString, mongoDatabaseName)
+);
 
 
 builder.Services.AddControllers();

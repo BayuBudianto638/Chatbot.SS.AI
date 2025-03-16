@@ -14,17 +14,21 @@ namespace Chatbos.SS.LoginService.Token
 
         public string GenerateAccessToken(IEnumerable<Claim> claims)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var key = Encoding.UTF8.GetBytes("f461ff8bd05289f9a56a68b7ed43445e"); // Make sure this matches appsettings.json
+            var securityKey = new SymmetricSecurityKey(key);
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            var Sectoken = new JwtSecurityToken(_configuration["Jwt:Issuer"],
-              _configuration["Jwt:Issuer"],
-              claims,
-              expires: DateTime.Now.AddMinutes(Convert.ToInt32(_configuration["Jwt:ExpirationTime:AccessToken"])),
-              signingCredentials: credentials);
+            var token = new JwtSecurityToken(
+                issuer: "http://localhost:5147", // Must match appsettings.json
+                audience: "http://localhost:5147", // Must match appsettings.json
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(300), // Token expiration
+                signingCredentials: credentials
+            );
 
-            return new JwtSecurityTokenHandler().WriteToken(Sectoken);
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
 
         public string GenerateRefreshToken()
         {

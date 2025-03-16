@@ -1,10 +1,12 @@
-﻿namespace Chatbot.SS.AI.Entities.Models
+﻿using MongoDB.Bson;
+
+namespace Chatbot.SS.AI.Entities.Models
 {
     public class UserToken
     {
-        public string Id { get; set; }
+        public ObjectId Id { get; set; }
 
-        public string UserId { get; set; }
+        public ObjectId UserId { get; set; }
 
         public string RefreshToken { get; set; } = null!;
 

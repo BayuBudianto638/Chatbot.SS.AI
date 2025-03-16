@@ -4,6 +4,7 @@ using Chatbos.SS.LoginService.ViewModels;
 using Chatbot.SS.AI.Entities.Database;
 using Chatbot.SS.AI.Entities.Models;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Security.Claims;
@@ -42,12 +43,16 @@ namespace Chatbos.SS.LoginService.Services
                 User? user = await IsUserExist(username);
 
                 var selected_role = new ViewModels.Res_AuthLoginRoleVM();
+                var currentToken = GetCurrentToken();
+                var userToken = GetRefreshToken(user.Id);
 
                 ViewModels.Res_AuthVM outputUser = new ViewModels.Res_AuthVM
                 {
                     Id = user.Id,
                     Username = user.UserName,
-                    Role = user.Role
+                    Role = user.Role,
+                    AccessToken = currentToken,
+                    RefreshToken = userToken.Result.RefreshToken
                 };      
 
                 return new ResponseBase<ViewModels.Res_AuthVM> { Status = true, Message = "OK", Data = outputUser };
@@ -101,21 +106,27 @@ namespace Chatbos.SS.LoginService.Services
 
                 var generatedRefreshToken = _tokenTool.GenerateRefreshToken();
 
-                UserToken userToken = new UserToken
+                var userToken = new UserToken
                 {
-                    UserId = user.Id,
+                    Id = ObjectId.GenerateNewId(),
+                    UserId = ObjectId.Parse(user.Id),
                     RefreshToken = generatedRefreshToken,
-                    ExpiredAt = DateTime.UtcNow.AddDays(Convert.ToInt32(_configuration["Jwt:ExpirationTime:RefreshToken"])),
-                    Ip = data.IP
+                    Ip = data.IP,
+                    CreatedAt = DateTime.UtcNow,
+                    ExpiredAt = DateTime.UtcNow.AddDays(7),
+                    User = new User
+                    {
+                        Id = user.Id,
+                        UserName = user.UserName,
+                        Role = user.Role
+                    }
                 };
 
                 user.LastAccess = DateTime.UtcNow;
 
-                // Update user in MongoDB
                 var update = Builders<User>.Update.Set(u => u.LastAccess, user.LastAccess);
                 await _context.Users.UpdateOneAsync(u => u.Id == user.Id, update);
 
-                // Insert new refresh token into UserTokens collection
                 await _context.UserToken.InsertOneAsync(userToken);
 
                 var generatedAccessToken = _tokenTool.GenerateAccessToken(new List<Claim>
@@ -131,6 +142,7 @@ namespace Chatbos.SS.LoginService.Services
                     {
                         Id = user.Id,
                         Username = user.UserName,
+                        Role = user.Role,
                         AccessToken = generatedAccessToken,
                         RefreshToken = generatedRefreshToken
                     }
@@ -181,8 +193,10 @@ namespace Chatbos.SS.LoginService.Services
                 if (user == null || user.UserName != principalUsername)
                     throw new Exception("Invalid token");
 
+                var userObjectId = ObjectId.Parse(user.Id);
+
                 var userToken = await _context.UserToken
-                    .Find(ut => ut.UserId == user.Id && ut.RefreshToken == data.RefreshToken && ut.ExpiredAt >= DateTime.UtcNow)
+                    .Find(ut => ut.UserId == userObjectId && ut.RefreshToken == data.RefreshToken && ut.ExpiredAt >= DateTime.UtcNow)
                     .FirstOrDefaultAsync();
 
                 if (userToken == null)
@@ -300,6 +314,13 @@ namespace Chatbos.SS.LoginService.Services
         {
             return await _context.Users
                 .Find(u => u.UserName == userName)
+                .FirstOrDefaultAsync();
+        }
+
+        private async Task<UserToken> GetRefreshToken(string id)
+        {
+            return await _context.UserToken
+                .Find(u => u.Id == ObjectId.Parse(id))
                 .FirstOrDefaultAsync();
         }
 
