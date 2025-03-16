@@ -1,0 +1,6 @@
+@Chatbot.SS.AI.Entities_HostAddress = http://localhost:5145
+
+GET {{Chatbot.SS.AI.Entities_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

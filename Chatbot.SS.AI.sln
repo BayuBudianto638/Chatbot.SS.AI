@@ -12,6 +12,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatbot.SS.AI.Web", "Chatbo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatbot.SS.AI.Tests", "Chatbot.SS.AI.Tests\Chatbot.SS.AI.Tests.csproj", "{44B26C9E-1FB6-D3D8-73CE-1746D056014B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatbos.SS.LoginService", "Chatbos.SS.LoginService\Chatbos.SS.LoginService.csproj", "{641C6BDC-BD24-A08A-CD04-619142C851CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatbot.SS.AI.Web.CS", "Chatbot.SS.AI.Web.CS\Chatbot.SS.AI.Web.CS.csproj", "{54FB63BC-8784-80CC-29B4-6EF7B7314990}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatbot.SS.AI.Entities", "Chatbot.SS.AI.Entities\Chatbot.SS.AI.Entities.csproj", "{F986CD54-D0C1-FA48-95C7-E6BEE82CB146}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EncryptionLib", "EncryptionLib", "{E7E776C3-8E3C-49C4-98BD-C8113DE393C0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthorizationLib", "AuthorizationLib", "{21C453A2-45A4-4C67-94B3-A4C1EA283D4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatbot.SS.AI.EncryptionLib", "Chatbot.SS.AI.EncryptionLib\Chatbot.SS.AI.EncryptionLib.csproj", "{FA281665-15A6-4032-AD63-B52C3BF27B81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatbot.SS.AI.AuthorizationLib", "Chatbot.SS.AI.AuthorizationLib\Chatbot.SS.AI.AuthorizationLib.csproj", "{AA474E1A-61A5-4922-9169-1B7A108E58A6}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatbot.SS.AI.MiniLM", "Chatbot.SS.AI.MiniLM\Chatbot.SS.AI.MiniLM.csproj", "{90E6AAD9-BAA4-E1AB-4DDB-F576C247D087}"
@@ -42,16 +58,9 @@ Global
 		{44B26C9E-1FB6-D3D8-73CE-1746D056014B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44B26C9E-1FB6-D3D8-73CE-1746D056014B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44B26C9E-1FB6-D3D8-73CE-1746D056014B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90E6AAD9-BAA4-E1AB-4DDB-F576C247D087}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90E6AAD9-BAA4-E1AB-4DDB-F576C247D087}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90E6AAD9-BAA4-E1AB-4DDB-F576C247D087}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90E6AAD9-BAA4-E1AB-4DDB-F576C247D087}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{90E6AAD9-BAA4-E1AB-4DDB-F576C247D087} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7AE32E51-8209-4FC6-A3C0-2C0DCF0D0B40}
