@@ -15,6 +15,9 @@ namespace Chatbot.SS.AI.Entities.Database
 
         public IMongoCollection<User> Users => _database.GetCollection<User>("Users");
         public IMongoCollection<UserToken> UserToken => _database.GetCollection<UserToken>("UserToken");
+        public IMongoCollection<ChatHistorySession> ChatSessions => _database.GetCollection<ChatHistorySession>("ChatSession");
+        public IMongoCollection<ChatHistoryItem> ChatHistoryItema => _database.GetCollection<ChatHistoryItem>("ChatHistoryItem");
+        public IMongoCollection<RoleGrant> RoleGrants => _database.GetCollection<RoleGrant>("RoleGrant");
 
         public void EnsureIndexes()
         {

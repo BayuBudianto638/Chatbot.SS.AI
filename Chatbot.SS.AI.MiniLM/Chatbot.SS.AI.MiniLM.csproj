@@ -14,7 +14,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Chatbot.SS.AI.AuthorizationLib\Chatbot.SS.AI.AuthorizationLib.csproj" />
+    <ProjectReference Include="..\Chatbot.SS.AI.Entities\Chatbot.SS.AI.Entities.csproj" />
     <ProjectReference Include="..\Chatbot.SS.AI.ServiceDefaults\Chatbot.SS.AI.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

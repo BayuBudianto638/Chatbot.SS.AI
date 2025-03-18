@@ -1,20 +1,18 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 
-namespace Chatbot.SS.AI.MiniLM.Models
+namespace Chatbot.SS.AI.Entities.Models
 {
     public class ChatHistoryItem
     {
         [BsonId]
-        public ObjectId Id { get; set; } = ObjectId.GenerateNewId();
+        [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId Id { get; set; }
 
-        [BsonElement("MessageUser")]
         public string MessageUser { get; set; }
-
-        [BsonElement("MessageAI")]
         public string MessageAI { get; set; }
 
-        [BsonElement("CreatedAt")]
+        [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

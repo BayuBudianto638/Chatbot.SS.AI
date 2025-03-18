@@ -29,5 +29,18 @@ namespace Chatbot.SS.AI.MiniLM.Controllers
 
             return Ok(new { Response = ChatbotHelper.FormatResponse(response) });
         }
+
+        [HttpPost("sendnonuser")]
+        public async Task<IActionResult> SendMessageNonUser([FromBody] Req_ChatMessageVM chatMessage)
+        {
+            if (!ChatbotHelper.IsValidMessage(chatMessage.Message))
+            {
+                return BadRequest("Invalid message. Please enter a valid input.");
+            }
+
+            string response = await _chatbotService.SendMessageNonUserAsync(chatMessage.Message);
+
+            return Ok(new { Response = ChatbotHelper.FormatResponse(response) });
+        }
     }
 }
