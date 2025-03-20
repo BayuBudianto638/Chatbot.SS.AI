@@ -8,6 +8,7 @@ using MongoDB.Bson;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using Chatbot.SS.AI.AuthorizationLib.Tools;
+using Chatbot.SS.AI.AuthorizationLib.Enums;
 
 namespace Chatbot.SS.AI.MiniLM.Services
 {
@@ -17,7 +18,7 @@ namespace Chatbot.SS.AI.MiniLM.Services
         private readonly InteractiveExecutor _executor;
         private readonly ChatHistory _chatHistory;
         private readonly AppDbContext _appDbContext;
-        private readonly AuthorizationTool _authorizationTool = new AuthorizationTool(_appDbContext);
+        private readonly AuthorizationTool _authorizationTool;
         private readonly string _modelPath = Environment.GetEnvironmentVariable("MINILM_PATH");
         public ChatbotService(AppDbContext appDbContext, IHttpContextAccessor httpContextAccessor)
         {
@@ -29,6 +30,7 @@ namespace Chatbot.SS.AI.MiniLM.Services
 
             _appDbContext = appDbContext;
             _httpContextAccessor = httpContextAccessor;
+            _authorizationTool = new AuthorizationTool(_appDbContext);
 
             var model = LLamaWeights.LoadFromFile(parameters);
             var context = model.CreateContext(parameters);
@@ -36,13 +38,21 @@ namespace Chatbot.SS.AI.MiniLM.Services
 
             _chatHistory = new ChatHistory();
             _chatHistory.AddMessage(AuthorRole.System,
-                "Transcript of a dialog where the User interacts with an AI Assistant named Bob. Bob is helpful, kind, and precise.");
-            _chatHistory.AddMessage(AuthorRole.User, "Hello, Bob.");
-            _chatHistory.AddMessage(AuthorRole.Assistant, "Hello! How may I assist you?");
+                "Transcript of a dialog where the User interacts with an AI Assistant named Kacrut. " +
+                "Kacrut is helpful, kind, and precise. Kacrut also a Customer Service Officer that help Customer questions.");
+            _chatHistory.AddMessage(AuthorRole.User, "Hello, Kacrut.");
+            _chatHistory.AddMessage(AuthorRole.Assistant, "Hello! I am Kacrut. How may I assist you?");
         }
 
         public async Task<string> SendMessageAsync(string userMessage)
         {
+            var authed = await _authorizationTool.IsAuthorized(_httpContextAccessor.HttpContext.User, AuthGrantEnum.CREATE);
+
+            if (!authed.Auth)
+            {
+                throw new Exception(authed.Message);
+            }
+
             var chatHistory = new ChatHistory();
             chatHistory.AddMessage(AuthorRole.User, userMessage);
 
@@ -82,7 +92,7 @@ namespace Chatbot.SS.AI.MiniLM.Services
 
             if (data == null)
             {
-                await _InsertChatSession(newMessage);
+                await _InsertChatSession(data.Result.Role, newMessage);
             }
             else
             {
@@ -133,7 +143,7 @@ namespace Chatbot.SS.AI.MiniLM.Services
 
             if (data == null)
             {
-                await _InsertChatSession(newMessage);
+                await _InsertChatSession(data.Result.Role, newMessage);
             }
             else
             {
@@ -143,12 +153,12 @@ namespace Chatbot.SS.AI.MiniLM.Services
             return botResponse;
         }
 
-        private async Task _InsertChatSession(ChatHistoryItem chatHistoryItem)
+        private async Task _InsertChatSession(string role, ChatHistoryItem chatHistoryItem)
         {
             var chatSession = new ChatHistorySession
             {
-                UserId = new ObjectId("67d572dbebe82691526e176b"),
-                Role = "ADMIN",
+                UserId = chatHistoryItem.UserId,
+                Role = role,
                 CreatedAt = DateTime.UtcNow,
                 ChatHistoryItem = new List<ChatHistoryItem>
                 {

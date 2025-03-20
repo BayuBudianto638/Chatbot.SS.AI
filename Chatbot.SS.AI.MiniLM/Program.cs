@@ -1,6 +1,17 @@
+using Chatbot.SS.AI.Entities.Database;
+using Chatbot.SS.AI.MiniLM.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
+string mongoConnectionString = configuration["MongoDB:ConnectionString"] ?? "mongodb://localhost:27017/";
+string mongoDatabaseName = configuration["MongoDB:DatabaseName"] ?? "ChatbotDB";
+
 
 // Add services to the container.
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<AppDbContext>(provider =>
+    new AppDbContext(mongoConnectionString, mongoDatabaseName));
+builder.Services.AddScoped<IChatbotService, ChatbotService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

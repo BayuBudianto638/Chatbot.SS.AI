@@ -64,7 +64,7 @@ namespace Chatbot.SS.AI.AuthorizationLib.Tools
             }
             catch (Exception ex)
             {
-                return new ViewModels.AuthorizationVM { Auth = false, Message = ex.Message, UserId = 0 };
+                return new ViewModels.AuthorizationVM { Auth = false, Message = ex.Message, UserId = new ObjectId("0") };
             }
         }
     }
