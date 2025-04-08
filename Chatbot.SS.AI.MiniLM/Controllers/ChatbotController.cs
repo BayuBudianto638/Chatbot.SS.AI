@@ -1,7 +1,7 @@
 ﻿using Chatbot.SS.AI.MiniLM.Helpers;
+using Chatbot.SS.AI.MiniLM.Models;
 using Chatbot.SS.AI.MiniLM.Services;
 using Chatbot.SS.AI.MiniLM.ViewModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Chatbot.SS.AI.MiniLM.Controllers
@@ -41,6 +41,11 @@ namespace Chatbot.SS.AI.MiniLM.Controllers
             string response = await _chatbotService.SendMessageNonUserAsync(chatMessage.Message);
 
             return Ok(new { Response = ChatbotHelper.FormatResponse(response) });
+        }
+        [HttpPost("SendMsg")]
+        public Task<string> SendMessage([FromBody] SendMessageInput input, [FromServices] StatefulChatbotService _service)
+        {
+            return _service.Send(input);
         }
     }
 }

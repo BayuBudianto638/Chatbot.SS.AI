@@ -22,6 +22,9 @@ namespace Chatbot.SS.AI.MiniLM.Services
         private readonly string _modelPath = Environment.GetEnvironmentVariable("MINILM_PATH");
         public ChatbotService(AppDbContext appDbContext, IHttpContextAccessor httpContextAccessor)
         {
+            string llamaPath = Path.Combine(AppContext.BaseDirectory, "runtimes", "win-x64", "native", "avx2", "llama.dll");
+            LLama.Native.NativeLibraryConfig.LLama.WithLibrary(llamaPath);
+
             var parameters = new ModelParams(_modelPath)
             {
                 ContextSize = 1024,
@@ -105,7 +108,6 @@ namespace Chatbot.SS.AI.MiniLM.Services
         public async Task<string> SendMessageNonUserAsync(string userMessage)
         {
             var chatHistory = new ChatHistory();
-            chatHistory.AddMessage(AuthorRole.User, userMessage);
 
             var inferenceParams = new InferenceParams
             {

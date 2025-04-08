@@ -11,7 +11,8 @@ string mongoDatabaseName = configuration["MongoDB:DatabaseName"] ?? "ChatbotDB";
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<AppDbContext>(provider =>
     new AppDbContext(mongoConnectionString, mongoDatabaseName));
-builder.Services.AddScoped<IChatbotService, ChatbotService>();
+builder.Services.AddSingleton<IChatbotService, ChatbotService>();
+builder.Services.AddSingleton<StatefulChatbotService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
